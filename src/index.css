@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#image_quienes_somos{
+  box-shadow: 25px 25px 45px rgba(0, 0, 0, 0.719);
+}
+.button_secondary{
+  box-shadow: 15px 15px 35px rgba(0, 0, 0, 0.466);
+}
