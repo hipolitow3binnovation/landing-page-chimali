@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react';
-import Home from './views/Home'
-import gsap, { ScrollSmoother, ScrollToPlugin } from "gsap/all";
+import React, { useEffect, useRef } from "react";
+import Home from "./views/Home";
+import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
+
+import gsap, { ScrollTrigger, ScrollSmoother, ScrollToPlugin } from "gsap/all";
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 function App() {
-  gsap.registerPlugin(ScrollSmoother, ScrollToPlugin);
   const mainContainer = useRef();
 
   useEffect(() => {
@@ -18,13 +21,15 @@ function App() {
 
   return (
     <>
+    <Navbar />
       <div ref={mainContainer} id="smooth-wrapper">
         <div id="smooth-content">
           <Home />
         </div>
       </div>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

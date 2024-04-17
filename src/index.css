@@ -2,9 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-#image_quienes_somos{
-  box-shadow: 25px 25px 45px rgba(0, 0, 0, 0.719);
+html {
+  scroll-behavior: smooth;
 }
-.button_secondary{
-  box-shadow: 15px 15px 35px rgba(0, 0, 0, 0.466);
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="file"],
+select,
+textarea {
+  @apply block w-full border border-[#ADADAD] px-4 py-2 outline-none placeholder:font-sans
+  placeholder:text-sm placeholder:font-light placeholder:text-[#888888] focus:ring-0;
+}
+
+label {
+  @apply block font-sans text-sm font-semibold text-[#363636];
+}
+
+ion-icon {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.scrolled-link-color {
+  color: #ffffff;
 }

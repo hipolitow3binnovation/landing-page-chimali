@@ -1,19 +1,20 @@
-import UserInfo from "../components/home/UserInfo";
-import Banner from "../components/home/banner/Banner";
-import Portada from "../components/home/portada/Portada";
-import Precios from "../components/home/precios/Precios";
-import QuienesSomos from "../components/home/quienesSomos/QuienesSomos";
+import Hero from "../components/home/hero/Hero";
+import About from "../components/home/about/About";
+import Products from "../components/home/products/Products";
+import CTA from "../components/home/cta/CTA";
+import Contact from "../components/home/contact/Contact";
 
-const Home=()=>{
-    return(
-        <>
-            <Portada/>
-            <Precios/>
-            <QuienesSomos/>
-            <Banner/>
-            <UserInfo/>
-            <div className="w-full h-[400vh] "></div>
-        </>
-    )
-}
+const Home = () => {
+  return (
+    <>
+      <main className="w-full">
+        <Hero />
+        <About />
+        <Products />
+        <CTA />
+        <Contact />
+      </main>
+    </>
+  );
+};
 export default Home;

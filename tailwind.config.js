@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'sans': "'Poppins', 'sans-serif'",
+        'serif': "'Playfair Display', 'serif'",
+      },
+    }
   },
-  plugins: [],
+  plugins: ["prettier-plugin-tailwindcss", "@tailwindcss/forms"],
 }
