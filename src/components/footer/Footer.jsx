@@ -3,7 +3,7 @@ import logo from "../../assets/logo.svg";
 
 const Footer = () => {
   return (
-    <footer className="bg-[url('../../assets/home/footer.webp')] relative bg-no-repeat bg-cover w-full">
+    <footer className="bg-[url('../../assets/home/footer/footer.webp')] relative bg-no-repeat bg-cover w-full">
       <div className="container px-6 mx-auto">
         <div className="flex flex-col items-center justify-center w-full gap-8 pt-8 pb-24 md:w-1/2 ">
           <div className="flex justify-center w-full">
