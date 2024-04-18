@@ -25,9 +25,10 @@ function App() {
       <div ref={mainContainer} id="smooth-wrapper">
         <div id="smooth-content">
           <Home />
+          <Footer />
         </div>
       </div>
-      <Footer />
+      
     </>
   );
 }
