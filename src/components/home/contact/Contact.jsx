@@ -1,5 +1,6 @@
 import React from "react";
 import contact from "../../../assets/home/contact/bg-contact.webp";
+import Form from "./Form";
 
 const Contact = () => {
   return (
@@ -19,37 +20,7 @@ const Contact = () => {
                 de ti!
               </p>
             </div>
-            <form className="flex flex-col gap-4">
-              <div>
-                <label htmlFor="name">Nombre</label>
-                <input type="text" id="name" placeholder="Escribe tu nombre" />
-              </div>
-
-              <div>
-                <label htmlFor="email">Correo electrónico</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Escribe tu correo electrónico"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message">Mensaje</label>
-                <textarea
-                  name="message"
-                  id="message"
-                  placeholder="Escribe tu mensaje"
-                  rows="8"
-                ></textarea>
-              </div>
-
-              <div>
-                <button className="border uppercase border-[#623D21] font-sans font-semibold text-sm text-white bg-[#956851] px-4 py-2 block w-full">
-                  Enviar
-                </button>
-              </div>
-            </form>
+            <Form />
           </div>
         </div>
         <div className="absolute bottom-0 left-0 bg-[url('./assets/pattern-dark.svg')] w-full h-16 bg-repeat-x bg-fill rotate-180 invert"></div>
