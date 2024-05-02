@@ -1,42 +1,52 @@
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import axios from "axios";
+import moment from "moment";
 
 const Form = () => {
   const [locationInfo, setLocationInfo] = useState({});
   const [browserInfo, setBrowserInfo] = useState({});
-  const [formData, setFormData] = useState({
-    fecha: "",
-    hora: "",
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const writeToSheet = async () => {
-    // Añadir la fecha y hora actuales al formData
-    const now = new Date();
-    const fechaActual = `${now.getFullYear()}-${(now.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`;
-    const horaActual = `${now.getHours().toString().padStart(2, "0")}:${now
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
+  const onSubmit = (data) => {
+    console.log("Datos del Formulario");
+    console.log(data);
 
-    const formDataConFechaYHora = {
-      ...formData,
+    const now = moment();
+    const fechaActual = now.format("DD-MM-YYYY");
+    const horaActual = now.format("HH:mm");
+
+    const dataConFechaYHora = {
       fecha: fechaActual,
       hora: horaActual,
+      ...data,
     };
 
-    console.log("FORM DATA: ", locationInfo);
+    writeToSheet(dataConFechaYHora);
+    reset();
+    setFormSubmitted(true);
+    setFeedbackMessage("¡Tus datos han sido enviados correctamente 🍷!");
+    setShowMessage(true);
+
+    setTimeout(() => {
+      setFormSubmitted(false);
+      setFeedbackMessage("");
+      setShowMessage(false);
+    }, 5000);
+  };
+
+  const writeToSheet = async (dataConFechaYHora) => {
+    console.log("Datos del FormData en writeToSheet");
+    console.log(dataConFechaYHora);
 
     if (
       Object.keys(locationInfo).length > 0 &&
@@ -44,7 +54,7 @@ const Form = () => {
     ) {
       const userInfo = [
         [
-          ...Object.values(formDataConFechaYHora),
+          ...Object.values(dataConFechaYHora),
           ...Object.values(locationInfo),
           ...Object.values(browserInfo),
         ],
@@ -110,18 +120,39 @@ const Form = () => {
   }, []);
 
   return (
-    <form className="flex flex-col gap-4">
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      {formSubmitted && (
+        <div className="border border-[#623D21] bg-[#623D21]/10 px-4 py-3 text-[#623D21] text-sm font-light text-center shadow animate-message_feedback">
+          {feedbackMessage}
+        </div>
+      )}
       <div>
         <label htmlFor="name">Nombre</label>
         <input
           type="text"
           id="name"
-          name="name"
           placeholder="Escribe tu nombre"
-          value={formData.name}
-          onChange={handleChange}
-          required
+          {...register("name", {
+            required: {
+              value: true,
+              message: "Ingresa tu nombre",
+            },
+            pattern: {
+              value: /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ-]{1,30}$/i,
+              message:
+                "El nombre no puede tener números ni carácteres especiales",
+            },
+            maxLength: {
+              value: 30,
+              message: "El nombre no puede tener más de 30 carácteres",
+            },
+          })}
         />
+        <p>
+          {errors.name && (
+            <span className="text-xs text-red-700">{errors.name.message}</span>
+          )}
+        </p>
       </div>
 
       <div>
@@ -129,32 +160,54 @@ const Form = () => {
         <input
           type="email"
           id="email"
-          name="email"
           placeholder="Escribe tu correo electrónico"
-          value={formData.email}
-          onChange={handleChange}
-          required
+          {...register("email", {
+            required: {
+              value: true,
+              message: "Ingresa tu correo electrónico",
+            },
+            pattern: {
+              value:
+                /^[a-zA-Z0-9._%+-]+@(gmail|outlook|hotmail|icloud)\.(com|es)$/i,
+              message: "Correo electrónico con formato incorrecto",
+            },
+          })}
         />
+        <p>
+          {errors.email && (
+            <span className="text-xs text-red-700">{errors.email.message}</span>
+          )}
+        </p>
       </div>
 
       <div>
         <label htmlFor="message">Mensaje</label>
         <textarea
           id="message"
-          name="message"
           placeholder="Escribe tu mensaje"
           rows="8"
-          value={formData.message}
-          onChange={handleChange}
-          required
-        ></textarea>
+          {...register("message", {
+            required: {
+              value: true,
+              message: "Redacta tu mensaje",
+            },
+            maxLength: {
+              value: 600,
+              message: "El mensaje no puede tener más de 600 carácteres",
+            },
+          })}
+        />
+        <p>
+          {errors.message && (
+            <span className="text-xs text-red-700">
+              {errors.message.message}
+            </span>
+          )}
+        </p>
       </div>
 
       <div>
         <button
-          onClick={() => {
-            writeToSheet();
-          }}
           type="submit"
           className="border uppercase border-[#623D21] font-sans font-semibold text-sm text-white bg-[#956851] px-4 py-2 block w-full"
         >
